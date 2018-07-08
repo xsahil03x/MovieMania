@@ -9,19 +9,20 @@ public class MovieModel {
 
     @SerializedName("results")
     @Expose
-    private List<Result> results = null;
+    private List<Result> results;
     @SerializedName("page")
     @Expose
     private Integer page;
     @SerializedName("total_results")
     @Expose
     private Integer totalResults;
-    @SerializedName("dates")
-    @Expose
-    private Dates dates;
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
+
+    public MovieModel(List<Result> movies) {
+        this.results = movies;
+    }
 
     public List<Result> getResults() {
         return results;
@@ -45,14 +46,6 @@ public class MovieModel {
 
     public void setTotalResults(Integer totalResults) {
         this.totalResults = totalResults;
-    }
-
-    public Dates getDates() {
-        return dates;
-    }
-
-    public void setDates(Dates dates) {
-        this.dates = dates;
     }
 
     public Integer getTotalPages() {

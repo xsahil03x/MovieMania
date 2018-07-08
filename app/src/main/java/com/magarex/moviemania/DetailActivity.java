@@ -1,10 +1,11 @@
 package com.magarex.moviemania;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.magarex.moviemania.Models.Result;
 import com.magarex.moviemania.Utils.GlideApp;
@@ -38,7 +39,10 @@ public class DetailActivity extends AppCompatActivity {
 
             GlideApp.with(this)
                     .load(ProjectUtils.POSTER_BASE_URL+movie.getPosterPath())
+                    .placeholder(R.drawable.movie_poster_placeholder)
+                    .error(R.drawable.movie_poster_error)
                     .into(imv_poster);
+
             tv_movie_name.setText(movie.getTitle());
             tv_rating.setText(Double.toString(movie.getVoteAverage()));
             tv_release.setText(movie.getReleaseDate());

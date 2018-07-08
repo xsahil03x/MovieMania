@@ -2,6 +2,6 @@
 <resources>
     <color name="colorPrimary">#1D1D1D</color>
     <color name="colorPrimaryDark">#171717</color>
-    <color name="colorAccent">#6AC045</color>
+    <color name="colorAccent">#6ac045</color>
     <color name="shimmer_background_color">#b1b1b1</color>
 </resources>

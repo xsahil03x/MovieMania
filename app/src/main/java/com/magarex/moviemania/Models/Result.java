@@ -2,10 +2,13 @@ package com.magarex.moviemania.Models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.magarex.moviemania.Utils.ProjectUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -45,7 +48,8 @@ public class Result implements Serializable {
     private String originalTitle;
     @SerializedName("genre_ids")
     @Expose
-    private List<Integer> genreIds = null;
+    @TypeConverters(ProjectUtils.IntegerListConvertor.class)
+    private List<Integer> genreIds;
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
@@ -58,6 +62,45 @@ public class Result implements Serializable {
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
+    @ColumnInfo(name = "criteria")
+    private String criteria;
+
+
+    public Result(Integer id, Integer voteCount, Boolean video, Double voteAverage, String title, Double popularity, String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds, String backdropPath, Boolean adult, String overview, String releaseDate, String criteria) {
+        this.id = id;
+        this.voteCount = voteCount;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.genreIds = genreIds;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.criteria = criteria;
+    }
+
+    @Ignore
+    public Result(Integer voteCount, Boolean video, Double voteAverage, String title, Double popularity, String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds, String backdropPath, Boolean adult, String overview, String releaseDate, String criteria) {
+        this.voteCount = voteCount;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.genreIds = genreIds;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.criteria = criteria;
+    }
 
     public Integer getVoteCount() {
         return voteCount;
@@ -169,6 +212,14 @@ public class Result implements Serializable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(String criteria) {
+        this.criteria = criteria;
     }
 
 }

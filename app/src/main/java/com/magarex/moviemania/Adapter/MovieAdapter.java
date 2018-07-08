@@ -16,11 +16,10 @@ import android.widget.TextView;
 
 import com.magarex.moviemania.DetailActivity;
 import com.magarex.moviemania.Interface.ItemClickListener;
-import com.magarex.moviemania.Models.MovieModel;
 import com.magarex.moviemania.Models.Result;
 import com.magarex.moviemania.R;
-import com.magarex.moviemania.Utils.ProjectUtils;
 import com.magarex.moviemania.Utils.GlideApp;
+import com.magarex.moviemania.Utils.ProjectUtils;
 
 import java.util.List;
 
