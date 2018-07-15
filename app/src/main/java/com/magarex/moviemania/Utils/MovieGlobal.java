@@ -5,16 +5,16 @@ import android.content.Context;
 
 public class MovieGlobal extends Application {
 
-    private static Context context;
+    private static MovieGlobal mGlobalInstance;
 
-    public static Context getContext() {
-        return context;
+    public static Context getInstance() {
+        return mGlobalInstance;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        context = getApplicationContext();
+        mGlobalInstance = (MovieGlobal) getApplicationContext();
     }
-
 }
+

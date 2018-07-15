@@ -8,7 +8,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.magarex.moviemania.Models.Result;
+import com.magarex.moviemania.Models.Movie;
 
 import java.util.List;
 
@@ -16,30 +16,30 @@ import java.util.List;
 public interface MovieDao {
 
     @Query("SELECT * FROM movies")
-    LiveData<List<Result>> getAllMovies();
+    LiveData<List<Movie>> getAllMovies();
 
     @Query("DELETE FROM movies")
     void deleteAllMovies();
 
     @Query("SELECT * FROM movies WHERE criteria = :criteria")
-    LiveData<List<Result>> getMoviesByCriteria(String criteria);
+    LiveData<List<Movie>> getMoviesByCriteria(String criteria);
 
     @Query("DELETE FROM movies WHERE criteria = :criteria")
     void deleteMoviesByCriteria(String criteria);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMoviesToDb(List<Result> movieList);
+    void insertMoviesToDb(List<Movie> movieList);
 
     @Query("SELECT * FROM movies WHERE id = :id")
-    LiveData<Result> getMoviesLiveData(String id);
+    LiveData<Movie> getMoviesLiveData(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMovie(Result... moviesResult);
+    void insertMovie(Movie... moviesMovie);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateMovie(Result moviesResult);
+    void updateMovie(Movie moviesMovie);
 
     @Delete
-    void deleteMovies(Result moviesResult);
+    void deleteMovies(Movie moviesMovie);
 
 }

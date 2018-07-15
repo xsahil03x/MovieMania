@@ -3,14 +3,12 @@ package com.magarex.moviemania.Database;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.magarex.moviemania.Interface.MovieApi;
-import com.magarex.moviemania.Models.MovieModel;
-import com.magarex.moviemania.Models.Result;
+import com.magarex.moviemania.Models.Movie;
+import com.magarex.moviemania.Models.MovieResponse;
 import com.magarex.moviemania.Utils.AppExecutors;
 import com.magarex.moviemania.Utils.ProjectUtils;
 
@@ -30,63 +28,74 @@ public class MovieRepository {
         return mMovieRepository;
     }
 
-    public LiveData<MovieModel> getMovies(final String filter, String apiKey) {
-        final MutableLiveData<MovieModel> result = new MutableLiveData<>();
+    public LiveData<MovieResponse> getMovies(final String filter, String apiKey) {
+        final MutableLiveData<MovieResponse> result = new MutableLiveData<>();
 
 //        if (criteria.equals(AppConstants.FAVOURITE_MOVIES)) {
 //            return getAllFavouriteMovies();
 //        }
 
-//        if (!ProjectUtils.isNetworkAvailable()) {
-//            return getAllMoviesFromDB(filter);
-//        }
+        if (!ProjectUtils.isNetworkAvailable()) {
+            return getAllMoviesFromDB(filter);
+        }
 
         ProjectUtils.getClient().create(MovieApi.class)
                 .getMoviesByPreference(filter, apiKey)
-                .enqueue(new Callback<MovieModel>() {
+                .enqueue(new Callback<MovieResponse>() {
                     @Override
-                    public void onResponse(@NonNull Call<MovieModel> call, @NonNull Response<MovieModel> response) {
+                    public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
                         result.setValue(response.body());
-                        saveInDatabase(response.body().getResults(), filter);
+                        saveInDatabase(response.body().getMovies(), filter);
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<MovieModel> call, @NonNull Throwable t) {
+                    public void onFailure(Call<MovieResponse> call, Throwable t) {
                         call.cancel();
                         Log.v(MovieRepository.class.getName(), "error: " + t.getMessage());
                     }
                 });
+//                .enqueue(new Callback<MovieResponse>() {
+//                    @Override
+//                    public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
+//                        result.setValue(response.body());
+//                        saveInDatabase(response.body().getMovies(), filter);
+//                        Log.d(TAG, "onResponse: "+response.body());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(@NonNull Call<MovieResponse> call, @NonNull Throwable t) {
+//                        call.cancel();
+//                        Log.v(MovieRepository.class.getName(), "error: " + t.getMessage());
+//                    }
+//                });
         return result;
     }
 
-    private LiveData<MovieModel> getAllMoviesFromDB(String filter) {
-        final MediatorLiveData<MovieModel> mediatorLiveData = new MediatorLiveData<>();
-        final LiveData<List<Result>> moviesLiveData = ProjectUtils.getDbInstance().movieDao().getMoviesByCriteria(filter);
+    private LiveData<MovieResponse> getAllMoviesFromDB(String filter) {
+        final MediatorLiveData<MovieResponse> mediatorLiveData = new MediatorLiveData<>();
+        final LiveData<List<Movie>> moviesLiveData = ProjectUtils.getDbInstance().movieDao().getMoviesByCriteria(filter);
 
-        mediatorLiveData.addSource(moviesLiveData, new Observer<List<Result>>() {
-            @Override
-            public void onChanged(@Nullable List<Result> movies) {
-                mediatorLiveData.removeSource(moviesLiveData);
-                if (movies != null && !movies.isEmpty()) {
-                    mediatorLiveData.setValue(new MovieModel(movies));
-                } else {
-                    mediatorLiveData.setValue(null);
-                }
+        mediatorLiveData.addSource(moviesLiveData, movies -> {
+            mediatorLiveData.removeSource(moviesLiveData);
+            if (movies != null && !movies.isEmpty()) {
+                mediatorLiveData.setValue(new MovieResponse(movies));
+            } else {
+                mediatorLiveData.setValue(null);
             }
         });
         return mediatorLiveData;
     }
 
-    private void saveInDatabase(final List<Result> movies, final String sortCriteria) {
-        for (Result movie : movies) {
-            movie.setCriteria(sortCriteria);
-        }
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                ProjectUtils.getDbInstance().movieDao().deleteMoviesByCriteria(sortCriteria);
-                ProjectUtils.getDbInstance().movieDao().insertMoviesToDb(movies);
+    private void saveInDatabase(final List<Movie> movies, final String sortCriteria) {
+        if (movies != null && !movies.isEmpty()) {
+            for (Movie movie : movies) {
+                movie.setCriteria(sortCriteria);
             }
+        }
+
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            ProjectUtils.getDbInstance().movieDao().deleteMoviesByCriteria(sortCriteria);
+            ProjectUtils.getDbInstance().movieDao().insertMoviesToDb(movies);
         });
     }
 

@@ -18,6 +18,10 @@ android {
     }
     dataBinding.enabled = true
     android.defaultConfig.vectorDrawables.useSupportLibrary = true
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -30,6 +34,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //room
     implementation "android.arch.persistence.room:runtime:1.1.0"
@@ -40,6 +45,10 @@ dependencies {
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     //ShimmerView
     implementation 'com.facebook.shimmer:shimmer:0.2.0'
+    //CircularImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //Database Tester
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
