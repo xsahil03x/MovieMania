@@ -1,13 +1,19 @@
 package com.magarex.moviemania.Adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.magarex.moviemania.CastDetailActivity;
+import com.magarex.moviemania.DetailActivity;
 import com.magarex.moviemania.Interface.ItemClickListener;
 import com.magarex.moviemania.Models.Cast;
 import com.magarex.moviemania.R;
@@ -63,6 +69,19 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final CastViewHolder holder, int position) {
         holder.mBinding.setCast(mCasts.get(position));
+        holder.setItemClickListener((view, position1, isLongClick) -> {
+            Intent intent = new Intent(mActivity, CastDetailActivity.class);
+            intent.putExtra("castId", mCasts.get(position).getId());
+
+            Pair[] pairs = new Pair[2];
+            pairs[0] = new Pair<View, String>(holder.mBinding.imgCastImage, "castTransition");
+            pairs[1] = new Pair<View, String>(holder.mBinding.txtCastName, "castNameTransition");
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, pairs);
+                mActivity.startActivity(intent, options.toBundle());
+            }
+        });
     }
 
     @Override
@@ -73,5 +92,4 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
             return mCasts.size();
         }
     }
-
 }

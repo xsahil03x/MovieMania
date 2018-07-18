@@ -8,6 +8,8 @@ import android.arch.persistence.room.TypeConverters;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.magarex.moviemania.R;
@@ -112,6 +114,7 @@ public class Movie implements Serializable {
                 .load(ProjectUtils.POSTER_BASE_URL + imageUrl)
                 .placeholder(R.drawable.movie_poster_placeholder)
                 .error(R.drawable.movie_poster_error)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(8)))
                 .into(view);
     }
 

@@ -43,6 +43,10 @@ public class ProjectUtils {
 
     public static final String PREF_FILTER = "pref_filter";
 
+    public static final String YOUTUBE_THUMBNAIL = "https://img.youtube.com/vi/%s/mqdefault.jpg";
+
+    public static final String YOUTUBE_URL = "http://www.youtube.com/watch?v=";
+
     private static final String DF1 = "yyyy-MM-dd";
 
     private static final String DF2 = "MMM dd, yyyy";
@@ -142,5 +146,10 @@ public class ProjectUtils {
             return settings.contains(key);
         }
 
+    }
+
+    public static boolean showOrHide(String review) {
+        char[] array = review.toCharArray();
+        return array.length > 200;
     }
 }

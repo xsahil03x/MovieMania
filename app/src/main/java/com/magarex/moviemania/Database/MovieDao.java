@@ -8,6 +8,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import com.magarex.moviemania.Models.FavouriteMovie;
 import com.magarex.moviemania.Models.Movie;
 
 import java.util.List;
@@ -29,6 +30,19 @@ public interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMoviesToDb(List<Movie> movieList);
+
+    @Query("SELECT * FROM favourites")
+    LiveData<List<FavouriteMovie>> getFavouriteMovies();
+
+    @Query("SELECT COUNT(movie_id) FROM favourites WHERE movie_id = :movieId")
+    LiveData<Integer> isFavourite(int movieId);
+
+    @Insert
+    void insertFavouriteMovie(FavouriteMovie favouriteMovie);
+
+    @Query("DELETE FROM favourites WHERE movie_id = :movieId")
+    void deleteFavouriteMovie(int movieId);
+
 
     @Query("SELECT * FROM movies WHERE id = :id")
     LiveData<Movie> getMoviesLiveData(String id);

@@ -4,10 +4,12 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +26,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static android.support.constraint.Constraints.TAG;
 import static com.magarex.moviemania.Utils.ProjectUtils.dpToPx;
 
-public class CastFragment extends Fragment {
+public class CastFragment extends BottomSheetDialogFragment {
 
     private static final String MOVIE_ID_KEY = "movie_id";
     private CastAdapter mAdapter;
@@ -61,38 +64,22 @@ public class CastFragment extends Fragment {
         rv_casts.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(), true));
         rv_casts.setItemAnimator(new DefaultItemAnimator());
 
-        Retrofit retrofit = ProjectUtils.getClient();
-        MovieApi client = retrofit.create(MovieApi.class);
-        client.getCast(mMovieId, ProjectUtils.API_KEY).enqueue(new Callback<CastResponse>() {
-            @Override
-            public void onResponse(Call<CastResponse> call, Response<CastResponse> response) {
-                mAdapter.addCastToList(response.body().getCast());
-            }
+        ProjectUtils.getClient()
+                .create(MovieApi.class)
+                .getCasts(mMovieId, ProjectUtils.API_KEY)
+                .enqueue(new Callback<CastResponse>() {
+                    @Override
+                    public void onResponse(Call<CastResponse> call, Response<CastResponse> response) {
+                        Log.d(TAG, "onResponse: "+response.message());
+                        mAdapter.addCastToList(response.body().getCast());
+                    }
 
-            @Override
-            public void onFailure(Call<CastResponse> call, Throwable t) {
-
-            }
-        });
+                    @Override
+                    public void onFailure(Call<CastResponse> call, Throwable t) {
+                        Log.d(TAG, "onFailure: " + t.getMessage());
+                    }
+                });
 
         return mBinding.getRoot();
     }
-
-//    private void loadMovies(String movieId) {
-//        MovieViewModelFactory mFactory = new MovieViewModelFactory(filter, ProjectUtils.API_KEY);
-//        MovieViewModel mViewModel = ViewModelProviders.of(this, mFactory).get(MovieViewModel.class);
-//
-//        mViewModel.getResults().observe(this, movieModel -> {
-//            if (movieModel != null) {
-////                mShimmerLayout.stopShimmer();
-////                mShimmerLayout.setVisibility(View.GONE);
-////                rv_movies.setVisibility(View.VISIBLE);
-//                mAdapter.addMoviesList(movieModel.getMovies());
-//            } else {
-//                mAdapter.addMoviesList(null);
-//                //mMainBinding.noConnectionLl.setVisibility(View.VISIBLE);
-//            }
-//        });
-//    }
-
 }

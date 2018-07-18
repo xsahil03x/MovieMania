@@ -9,15 +9,15 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_reviews"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
+            android:id="@+id/rv_trailers"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/review_item" />
+            tools:listitem="@layout/trailer_item"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

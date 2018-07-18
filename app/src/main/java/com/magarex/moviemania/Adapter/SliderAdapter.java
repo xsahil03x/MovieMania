@@ -22,7 +22,6 @@ public class SliderAdapter extends PagerAdapter {
     private Context mContext;
     private boolean isPlaying = false;
     private VideoView mPlayingView;
-    private LayoutInflater mInflator;
     private int[] videos = {
             R.raw.sample1,
             R.raw.sample3,
@@ -46,7 +45,7 @@ public class SliderAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        mInflator = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater mInflator = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = mInflator.inflate(R.layout.activity_on_boarding_item, container, false);
 
         VideoView vp_item = view.findViewById(R.id.vp_item);

@@ -73,10 +73,16 @@ public class MainActivity extends AppCompatActivity {
                 loadMovies(ProjectUtils.FILTER_POPULAR, false);
                 break;
             case 2:
-                if (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null).equals(ProjectUtils.FILTER_TOP_RATED)) {
-                    loadMovies(ProjectUtils.FILTER_TOP_RATED, false);
-                } else if (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null).equals(ProjectUtils.FILTER_POPULAR)) {
-                    loadMovies(ProjectUtils.FILTER_POPULAR, false);
+                switch (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null)) {
+                    case ProjectUtils.FILTER_TOP_RATED:
+                        loadMovies(ProjectUtils.FILTER_TOP_RATED, false);
+                        break;
+                    case ProjectUtils.FILTER_POPULAR:
+                        loadMovies(ProjectUtils.FILTER_POPULAR, false);
+                        break;
+                    case ProjectUtils.FILTER_FAVOURITE:
+                        loadMovies(ProjectUtils.FILTER_FAVOURITE, false);
+                        break;
                 }
                 break;
             default:
@@ -99,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.addMoviesList(movieModel.getMovies());
             } else {
                 mAdapter.addMoviesList(null);
-                //mMainBinding.noConnectionLl.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -127,8 +132,10 @@ public class MainActivity extends AppCompatActivity {
 
         TextView txvPopular = view.findViewById(R.id.txv_popular);
         TextView txvTopRated = view.findViewById(R.id.txv_top_rated);
+        TextView txvFavourite = view.findViewById(R.id.txv_favourite);
         final ImageView imvPopular = view.findViewById(R.id.imv_popular);
         final ImageView imvTopRated = view.findViewById(R.id.imv_top_rated);
+        final ImageView imvFavourite = view.findViewById(R.id.imv_favourite);
         ImageView close = view.findViewById(R.id.imv_close);
 
         final int filterIdentifier = ProjectUtils.SharedPreferenceHelper.contains(ProjectUtils.PREF_FILTER) ? 2 : 1;
@@ -137,14 +144,25 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 imvPopular.setVisibility(View.VISIBLE);
                 imvTopRated.setVisibility(View.GONE);
+                imvFavourite.setVisibility(View.GONE);
                 break;
             case 2:
-                if (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null).equals(ProjectUtils.FILTER_TOP_RATED)) {
-                    imvTopRated.setVisibility(View.VISIBLE);
-                    imvPopular.setVisibility(View.GONE);
-                } else if (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null).equals(ProjectUtils.FILTER_POPULAR)) {
-                    imvTopRated.setVisibility(View.GONE);
-                    imvPopular.setVisibility(View.VISIBLE);
+                switch (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null)) {
+                    case ProjectUtils.FILTER_TOP_RATED:
+                        imvTopRated.setVisibility(View.VISIBLE);
+                        imvPopular.setVisibility(View.GONE);
+                        imvFavourite.setVisibility(View.GONE);
+                        break;
+                    case ProjectUtils.FILTER_POPULAR:
+                        imvTopRated.setVisibility(View.GONE);
+                        imvPopular.setVisibility(View.VISIBLE);
+                        imvFavourite.setVisibility(View.GONE);
+                        break;
+                    case ProjectUtils.FILTER_FAVOURITE:
+                        imvFavourite.setVisibility(View.VISIBLE);
+                        imvPopular.setVisibility(View.GONE);
+                        imvTopRated.setVisibility(View.GONE);
+                        break;
                 }
                 break;
             default:
@@ -158,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
             ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_POPULAR);
             imvPopular.setVisibility(View.VISIBLE);
             imvTopRated.setVisibility(View.GONE);
+            imvFavourite.setVisibility(View.GONE);
             loadMovies(ProjectUtils.FILTER_POPULAR, true);
             dialog.dismiss();
         });
@@ -168,8 +187,21 @@ public class MainActivity extends AppCompatActivity {
             mShimmerLayout.startShimmer();
             ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_TOP_RATED);
             imvPopular.setVisibility(View.GONE);
+            imvFavourite.setVisibility(View.GONE);
             imvTopRated.setVisibility(View.VISIBLE);
             loadMovies(ProjectUtils.FILTER_TOP_RATED, true);
+            dialog.dismiss();
+        });
+
+        txvFavourite.setOnClickListener(v -> {
+            rv_movies.setVisibility(View.GONE);
+            mShimmerLayout.setVisibility(View.VISIBLE);
+            mShimmerLayout.startShimmer();
+            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_FAVOURITE);
+            imvPopular.setVisibility(View.GONE);
+            imvTopRated.setVisibility(View.GONE);
+            imvFavourite.setVisibility(View.VISIBLE);
+            loadMovies(ProjectUtils.FILTER_FAVOURITE, true);
             dialog.dismiss();
         });
 
