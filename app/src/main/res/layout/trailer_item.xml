@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="trailer"
+            type="com.magarex.moviemania.Models.Trailer" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_trailer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:background="@color/colorAccent"
+            android:scaleType="fitXY"
+            android:trailerImage="@{trailer.key}"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/txv_trailer_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="8dp"
+            android:text="@{trailer.name}"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_trailer"
+            tools:text="Avengers: The Infinity War 2" />
+
+        <ImageView
+            android:id="@+id/imv_play_thumb"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:alpha="0.7"
+            app:layout_constraintBottom_toBottomOf="@+id/img_trailer"
+            app:layout_constraintEnd_toEndOf="@+id/img_trailer"
+            app:layout_constraintStart_toStartOf="@+id/img_trailer"
+            app:layout_constraintTop_toTopOf="@+id/img_trailer"
+            app:srcCompat="@drawable/ic_play_thumbnail" />
+
+        <!--<View-->
+        <!--android:id="@+id/divider6"-->
+        <!--android:layout_width="5dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/textView8"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/textView8" />-->
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

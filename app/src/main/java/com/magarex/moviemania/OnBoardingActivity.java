@@ -1,6 +1,8 @@
 package com.magarex.moviemania;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -20,6 +22,8 @@ public class OnBoardingActivity extends AppCompatActivity {
     private LinearLayout dots;
     private ImageButton btnNext, btnBack;
     private int mCurrentPage;
+    private SliderAdapter mAdapter;
+
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -30,6 +34,12 @@ public class OnBoardingActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             mCurrentPage = position;
             addDotIndicator(position);
+
+
+            SliderAdapter adapter = (SliderAdapter) vp_tutorial.getAdapter();
+            if (adapter != null) {
+                adapter.playVideoAtPosition(position);
+            }
 
             if (position == 0) {
                 btnBack.setEnabled(false);
@@ -52,21 +62,33 @@ public class OnBoardingActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_boarding);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
 
         vp_tutorial = findViewById(R.id.vp_tutorial);
         dots = findViewById(R.id.dots);
         btnBack = findViewById(R.id.btnBack);
         btnNext = findViewById(R.id.btnNext);
+        vp_tutorial.setOffscreenPageLimit(2);
 
-        SliderAdapter mAdapter = new SliderAdapter(OnBoardingActivity.this);
+        mAdapter = new SliderAdapter(OnBoardingActivity.this);
         vp_tutorial.setAdapter(mAdapter);
-
+        mAdapter.playVideoAtPosition(0);
         addDotIndicator(0);
         vp_tutorial.addOnPageChangeListener(viewListener);
+//        Handler handler = new Handler(Looper.getMainLooper());
+//        handler.post(() -> mAdapter.playVideoAtPosition(0));
     }
 
     public void setNext(View view) {
@@ -75,6 +97,9 @@ public class OnBoardingActivity extends AppCompatActivity {
                     PreferenceManager.getDefaultSharedPreferences(OnBoardingActivity.this).edit();
             sharedPreferencesEditor.putBoolean(COMPLETED_ONBOARDING, true);
             sharedPreferencesEditor.apply();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
             finish();
         } else
             vp_tutorial.setCurrentItem(mCurrentPage + 1, true);
@@ -85,7 +110,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     }
 
     public void addDotIndicator(int position) {
-        TextView[] mDots = new TextView[3];
+        TextView[] mDots = new TextView[mAdapter.getCount()];
         dots.removeAllViews();
 
         for (int i = 0; i < mDots.length; i++) {
@@ -98,6 +123,5 @@ public class OnBoardingActivity extends AppCompatActivity {
 
         mDots[position].setTextColor(getResources().getColor(R.color.colorAccent));
     }
-
 
 }
