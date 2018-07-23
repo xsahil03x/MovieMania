@@ -231,4 +231,12 @@ public class MainActivity extends AppCompatActivity {
         mShimmerLayout.setVisibility(View.VISIBLE);
         mShimmerLayout.startShimmer();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null).equals(ProjectUtils.FILTER_FAVOURITE)) {
+            loadMovies(ProjectUtils.FILTER_FAVOURITE, true);
+        }
+    }
 }

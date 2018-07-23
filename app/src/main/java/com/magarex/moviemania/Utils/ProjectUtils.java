@@ -4,20 +4,14 @@ import android.arch.persistence.room.TypeConverter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
-import android.support.v7.graphics.Palette;
 import android.util.TypedValue;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.magarex.moviemania.BuildConfig;
 import com.magarex.moviemania.Database.MovieDatabase;
-import com.magarex.moviemania.R;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -34,7 +28,7 @@ public class ProjectUtils {
 
     private static final String BASE_URL = "http://api.themoviedb.org/3/";
 
-    public static final String API_KEY = "78b9f63937763a206bff26c070b94158";
+    public static final String API_KEY = BuildConfig.ApiKey;
 
     public static final String FILTER_POPULAR = "popular";
 

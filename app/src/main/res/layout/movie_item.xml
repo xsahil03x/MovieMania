@@ -29,7 +29,7 @@
             <ImageView
                 android:id="@+id/img_movie_poster"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="210dp"
                 android:layout_margin="4dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="Movie Image"
