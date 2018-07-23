@@ -4,13 +4,20 @@ import android.arch.persistence.room.TypeConverter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
+import android.support.v7.graphics.Palette;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.magarex.moviemania.Database.MovieDatabase;
+import com.magarex.moviemania.R;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -129,18 +136,6 @@ public class ProjectUtils {
             return settings.getString(key, defValue);
         }
 
-        public static void setSharedPreferenceLong(String key, long value) {
-            SharedPreferences settings = MovieGlobal.getInstance().getSharedPreferences(PREF_FILE, 0);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putLong(key, value);
-            editor.apply();
-        }
-
-        public static long getSharedPreferenceLong(String key, long defValue) {
-            SharedPreferences settings = MovieGlobal.getInstance().getSharedPreferences(PREF_FILE, 0);
-            return settings.getLong(key, defValue);
-        }
-
         public static boolean contains(String key) {
             SharedPreferences settings = MovieGlobal.getInstance().getSharedPreferences(PREF_FILE, 0);
             return settings.contains(key);
@@ -152,4 +147,5 @@ public class ProjectUtils {
         char[] array = review.toCharArray();
         return array.length > 200;
     }
+
 }

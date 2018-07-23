@@ -68,7 +68,12 @@ public class ReviewFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onResponse(@NonNull Call<ReviewResponse> call, @NonNull Response<ReviewResponse> response) {
                         Log.d(TAG, "onResponse: " + response.message());
-                        mAdapter.addReviewToList(response.body().getResults());
+                        if(response.body().getTotalResults() > 0){
+                        mAdapter.addReviewToList(response.body().getResults());}
+                        else{
+                            mBinding.rvReviews.setVisibility(View.GONE);
+                            mBinding.noReviewGroup.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override

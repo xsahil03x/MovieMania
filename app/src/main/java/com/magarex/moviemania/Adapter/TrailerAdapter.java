@@ -19,25 +19,13 @@ import java.util.List;
 
 import static com.magarex.moviemania.Utils.ProjectUtils.YOUTUBE_URL;
 
-class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+class TrailerViewHolder extends RecyclerView.ViewHolder {
 
     TrailerItemBinding mBinding;
-    private ItemClickListener itemClickListener;
 
     TrailerViewHolder(TrailerItemBinding itemBinding) {
         super(itemBinding.getRoot());
         this.mBinding = itemBinding;
-        mBinding.getRoot().setOnClickListener(this);
-    }
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
-    @Override
-    public void onClick(View view) {
-        itemClickListener.onClick(view, getAdapterPosition(), false);
     }
 }
 
@@ -61,19 +49,20 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerViewHolder> {
         TrailerItemBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.trailer_item, parent, false);
-        return new TrailerViewHolder(binding);
+        TrailerViewHolder holder = new TrailerViewHolder(binding);
+        binding.getRoot().setOnClickListener(view -> {
+            if (!mTrailer.isEmpty() && mTrailer.get(holder.getAdapterPosition()).getSite().equals("YouTube")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(YOUTUBE_URL + mTrailer.get(holder.getAdapterPosition()).getKey()));
+                mActivity.startActivity(intent);
+            }
+        });
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final TrailerViewHolder holder, int position) {
         holder.mBinding.setTrailer(mTrailer.get(position));
-        holder.setItemClickListener((view, position1, isLongClick) -> {
-            if (!mTrailer.isEmpty() && mTrailer.get(position).getSite().equals("YouTube")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(YOUTUBE_URL + mTrailer.get(position).getKey()));
-                mActivity.startActivity(intent);
-            }
-        });
     }
 
     @Override

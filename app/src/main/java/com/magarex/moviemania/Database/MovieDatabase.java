@@ -10,7 +10,7 @@ import com.magarex.moviemania.Models.FavouriteMovie;
 import com.magarex.moviemania.Models.Movie;
 import com.magarex.moviemania.Models.Review;
 
-@Database(entities = {Movie.class, Cast.class, Review.class, FavouriteMovie.class}, version = 2, exportSchema = false)
+@Database(entities = {Movie.class, FavouriteMovie.class}, version = 2, exportSchema = false)
 public abstract class MovieDatabase extends RoomDatabase {
 
     private static final Object LOCK = new Object();
@@ -22,7 +22,6 @@ public abstract class MovieDatabase extends RoomDatabase {
             synchronized (LOCK) {
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         MovieDatabase.class, MovieDatabase.DATABASE_NAME)
-                        .allowMainThreadQueries()
                         .build();
             }
         }

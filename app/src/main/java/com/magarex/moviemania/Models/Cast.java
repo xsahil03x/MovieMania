@@ -47,7 +47,7 @@ public class Cast implements Serializable {
                 .load(ProjectUtils.POSTER_BASE_URL + imageUrl)
                 .placeholder(R.drawable.movie_poster_placeholder)
                 .error(R.drawable.movie_poster_error)
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(8)))
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(25)))
                 .into(view);
     }
 

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.magarex.moviemania.Adapter.TrailerAdapter;
 import com.magarex.moviemania.Interface.MovieApi;
 import com.magarex.moviemania.Models.TrailerResponse;
@@ -50,14 +51,17 @@ public class TrailerFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TabBottomSheetTrailerBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.tab_bottom_sheet_trailer, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        TabBottomSheetTrailerBinding mBinding = DataBindingUtil.inflate(inflater,
+                R.layout.tab_bottom_sheet_trailer, container, false);
 
         mAdapter = new TrailerAdapter(getActivity());
         RecyclerView rv_Trailers = mBinding.rvTrailers;
         rv_Trailers.setAdapter(mAdapter);
         rv_Trailers.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv_Trailers.addItemDecoration(new GridSpacingItemDecoration(1,ProjectUtils.dpToPx(),true));
+        rv_Trailers.addItemDecoration(
+                new GridSpacingItemDecoration(1, ProjectUtils.dpToPx(), true));
         rv_Trailers.setItemAnimator(new DefaultItemAnimator());
 
         ProjectUtils.getClient()
@@ -65,13 +69,15 @@ public class TrailerFragment extends BottomSheetDialogFragment {
                 .getTrailers(mMovieId, ProjectUtils.API_KEY)
                 .enqueue(new Callback<TrailerResponse>() {
                     @Override
-                    public void onResponse(@NonNull Call<TrailerResponse> call, @NonNull Response<TrailerResponse> response) {
+                    public void onResponse(@NonNull Call<TrailerResponse> call,
+                                           @NonNull Response<TrailerResponse> response) {
                         Log.d(TAG, "onResponse: " + response.message());
                         mAdapter.addTrailerToList(response.body().getResults());
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<TrailerResponse> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<TrailerResponse> call,
+                                          @NonNull Throwable t) {
                         Log.d(TAG, "onFailure: " + t.getMessage());
                     }
                 });

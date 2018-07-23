@@ -6,10 +6,15 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.magarex.moviemania.R;

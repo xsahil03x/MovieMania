@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.magarex.moviemania.Interface.MovieApi;
 import com.magarex.moviemania.Models.Person;
+import com.magarex.moviemania.Utils.GlideApp;
 import com.magarex.moviemania.Utils.ProjectUtils;
 import com.magarex.moviemania.databinding.ActivityCastDetailBinding;
 
@@ -21,9 +23,18 @@ public class CastDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityCastDetailBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_cast_detail);
+        ActivityCastDetailBinding mBinding = DataBindingUtil.setContentView(this,
+                R.layout.activity_cast_detail);
+        String castDp = getIntent().getStringExtra("castDp");
         int id = getIntent().getIntExtra("castId", 0);
         if (id != 0) {
+            GlideApp.with(this)
+                    .load(ProjectUtils.POSTER_BASE_URL + castDp)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .placeholder(R.drawable.movie_poster_placeholder)
+                    .error(R.drawable.movie_poster_error)
+                    .into(mBinding.imgPersonImage);
+
             ProjectUtils.getClient()
                     .create(MovieApi.class)
                     .getPerson(id, ProjectUtils.API_KEY)

@@ -101,8 +101,9 @@ public class OnBoardingActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
-        } else
+        } else {
             vp_tutorial.setCurrentItem(mCurrentPage + 1, true);
+        }
     }
 
     public void setBack(View view) {

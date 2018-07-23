@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.constraint.Group;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.magarex.moviemania.Adapter.MovieAdapter;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter mAdapter;
     private RecyclerView rv_movies;
     private ShimmerFrameLayout mShimmerLayout;
+    private Group noInternetGroup, noFavouriteGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +51,21 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         rv_movies = mBinding.rvMovies;
         mShimmerLayout = mBinding.shimmerloading;
+        noInternetGroup = mBinding.noInternetGroup;
+        noFavouriteGroup = mBinding.noFavouriteGroup;
         setSupportActionBar(mBinding.toolbar);
         initViews();
+
+        mBinding.btnTryAgain.setOnClickListener(view -> {
+            if (ProjectUtils.isNetworkAvailable()) {
+                loadMovies(ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_POPULAR), true);
+            } else {
+                Toast.makeText(this, "Oops no Internet, Check your Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initViews() {
-        mShimmerLayout.startShimmer();
         mAdapter = new MovieAdapter(this);
         rv_movies.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
         rv_movies.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(), true));
@@ -63,17 +75,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFromSharedPrefs() {
-        //noInternet.setVisibility(View.GONE);
-
-        int loadingIdentifier = ProjectUtils.SharedPreferenceHelper.contains(ProjectUtils.PREF_FILTER) ? 2 : 1;
+        int loadingIdentifier = ProjectUtils.SharedPreferenceHelper.contains(
+                ProjectUtils.PREF_FILTER) ? 2 : 1;
 
         switch (loadingIdentifier) {
             case 1:
-                ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_POPULAR);
+                ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(
+                        ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_POPULAR);
                 loadMovies(ProjectUtils.FILTER_POPULAR, false);
                 break;
             case 2:
-                switch (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null)) {
+                switch (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(
+                        ProjectUtils.PREF_FILTER, null)) {
                     case ProjectUtils.FILTER_TOP_RATED:
                         loadMovies(ProjectUtils.FILTER_TOP_RATED, false);
                         break;
@@ -91,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadMovies(String filter, Boolean isFilterChanged) {
+        mShimmerLayout.startShimmer();
         MovieViewModelFactory mFactory = new MovieViewModelFactory(filter, ProjectUtils.API_KEY);
         MovieViewModel mViewModel = ViewModelProviders.of(this, mFactory).get(MovieViewModel.class);
 
@@ -104,7 +118,14 @@ public class MainActivity extends AppCompatActivity {
                 rv_movies.setVisibility(View.VISIBLE);
                 mAdapter.addMoviesList(movieModel.getMovies());
             } else {
+                mShimmerLayout.stopShimmer();
+                mShimmerLayout.setVisibility(View.GONE);
                 mAdapter.addMoviesList(null);
+                if (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null).equals(ProjectUtils.FILTER_FAVOURITE)) {
+                    noFavouriteGroup.setVisibility(View.VISIBLE);
+                } else {
+                    noInternetGroup.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -126,8 +147,10 @@ public class MainActivity extends AppCompatActivity {
     private void filterMovies() {
         View view = View.inflate(this, R.layout.custom_bottom_sheet, null);
 
-        final BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final BottomSheetDialog dialog = new BottomSheetDialog(this,
+                R.style.BottomSheetDialogTheme);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(
+                new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(view);
 
         TextView txvPopular = view.findViewById(R.id.txv_popular);
@@ -138,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
         final ImageView imvFavourite = view.findViewById(R.id.imv_favourite);
         ImageView close = view.findViewById(R.id.imv_close);
 
-        final int filterIdentifier = ProjectUtils.SharedPreferenceHelper.contains(ProjectUtils.PREF_FILTER) ? 2 : 1;
+        final int filterIdentifier = ProjectUtils.SharedPreferenceHelper.contains(
+                ProjectUtils.PREF_FILTER) ? 2 : 1;
 
         switch (filterIdentifier) {
             case 1:
@@ -147,7 +171,8 @@ public class MainActivity extends AppCompatActivity {
                 imvFavourite.setVisibility(View.GONE);
                 break;
             case 2:
-                switch (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(ProjectUtils.PREF_FILTER, null)) {
+                switch (ProjectUtils.SharedPreferenceHelper.getSharedPreferenceString(
+                        ProjectUtils.PREF_FILTER, null)) {
                     case ProjectUtils.FILTER_TOP_RATED:
                         imvTopRated.setVisibility(View.VISIBLE);
                         imvPopular.setVisibility(View.GONE);
@@ -170,10 +195,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         txvPopular.setOnClickListener(v -> {
-            rv_movies.setVisibility(View.GONE);
-            mShimmerLayout.setVisibility(View.VISIBLE);
-            mShimmerLayout.startShimmer();
-            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_POPULAR);
+            showShimmer();
+            noFavouriteGroup.setVisibility(View.GONE);
+            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER,
+                    ProjectUtils.FILTER_POPULAR);
             imvPopular.setVisibility(View.VISIBLE);
             imvTopRated.setVisibility(View.GONE);
             imvFavourite.setVisibility(View.GONE);
@@ -182,10 +207,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         txvTopRated.setOnClickListener(v -> {
-            rv_movies.setVisibility(View.GONE);
-            mShimmerLayout.setVisibility(View.VISIBLE);
-            mShimmerLayout.startShimmer();
-            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_TOP_RATED);
+            showShimmer();
+            noFavouriteGroup.setVisibility(View.GONE);
+            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER,
+                    ProjectUtils.FILTER_TOP_RATED);
             imvPopular.setVisibility(View.GONE);
             imvFavourite.setVisibility(View.GONE);
             imvTopRated.setVisibility(View.VISIBLE);
@@ -194,10 +219,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         txvFavourite.setOnClickListener(v -> {
-            rv_movies.setVisibility(View.GONE);
-            mShimmerLayout.setVisibility(View.VISIBLE);
-            mShimmerLayout.startShimmer();
-            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER, ProjectUtils.FILTER_FAVOURITE);
+            showShimmer();
+            ProjectUtils.SharedPreferenceHelper.setSharedPreferenceString(ProjectUtils.PREF_FILTER,
+                    ProjectUtils.FILTER_FAVOURITE);
             imvPopular.setVisibility(View.GONE);
             imvTopRated.setVisibility(View.GONE);
             imvFavourite.setVisibility(View.VISIBLE);
@@ -208,5 +232,11 @@ public class MainActivity extends AppCompatActivity {
         close.setOnClickListener(v -> dialog.dismiss());
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+    private void showShimmer() {
+        rv_movies.setVisibility(View.GONE);
+        mShimmerLayout.setVisibility(View.VISIBLE);
+        mShimmerLayout.startShimmer();
     }
 }

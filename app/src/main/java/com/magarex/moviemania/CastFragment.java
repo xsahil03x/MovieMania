@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,10 +20,10 @@ import com.magarex.moviemania.Utils.GridSpacingItemDecoration;
 import com.magarex.moviemania.Utils.ProjectUtils;
 import com.magarex.moviemania.databinding.TabBottomSheetCastBinding;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static android.support.constraint.Constraints.TAG;
 import static com.magarex.moviemania.Utils.ProjectUtils.dpToPx;
@@ -57,6 +56,7 @@ public class CastFragment extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         TabBottomSheetCastBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.tab_bottom_sheet_cast, container, false);
 
+        mBinding.shimmerCastLoading.startShimmer();
         mAdapter = new CastAdapter(getActivity());
         RecyclerView rv_casts = mBinding.rvCasts;
         rv_casts.setAdapter(mAdapter);
@@ -71,12 +71,17 @@ public class CastFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onResponse(Call<CastResponse> call, Response<CastResponse> response) {
                         Log.d(TAG, "onResponse: "+response.message());
+                        mBinding.shimmerCastLoading.stopShimmer();
+                        mBinding.shimmerCastLoading.setVisibility(View.GONE);
                         mAdapter.addCastToList(response.body().getCast());
+                        mBinding.rvCasts.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onFailure(Call<CastResponse> call, Throwable t) {
                         Log.d(TAG, "onFailure: " + t.getMessage());
+                        mBinding.shimmerCastLoading.stopShimmer();
+                        mBinding.shimmerCastLoading.setVisibility(View.GONE);
                     }
                 });
 

@@ -41,7 +41,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
 
     private Activity mActivity;
     private List<Review> mReviews;
-    private Boolean flag = false;
+    private static Boolean flag = false;
 
     public ReviewAdapter(Activity activity) {
         this.mActivity = activity;

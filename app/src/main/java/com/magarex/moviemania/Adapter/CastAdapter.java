@@ -72,6 +72,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
         holder.setItemClickListener((view, position1, isLongClick) -> {
             Intent intent = new Intent(mActivity, CastDetailActivity.class);
             intent.putExtra("castId", mCasts.get(position).getId());
+            intent.putExtra("castDp", mCasts.get(position).getProfilePath());
 
             Pair[] pairs = new Pair[2];
             pairs[0] = new Pair<View, String>(holder.mBinding.imgCastImage, "castTransition");

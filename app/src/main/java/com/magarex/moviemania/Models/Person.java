@@ -3,6 +3,7 @@ package com.magarex.moviemania.Models;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.Expose;
@@ -34,15 +35,6 @@ public class Person {
         this.biography = biography;
         this.birthPlace = birthPlace;
         this.profilePath = profilePath;
-    }
-
-    @BindingAdapter({"android:personImage"})
-    public static void loadPersonImage(ImageView view, String imageUrl) {
-        GlideApp.with(view.getContext())
-                .load(ProjectUtils.POSTER_BASE_URL + imageUrl)
-                .placeholder(R.drawable.movie_poster_placeholder)
-                .error(R.drawable.movie_poster_error)
-                .into(view);
     }
 
     public String getBirthday() {

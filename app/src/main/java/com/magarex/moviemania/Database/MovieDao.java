@@ -16,12 +16,6 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-    @Query("SELECT * FROM movies")
-    LiveData<List<Movie>> getAllMovies();
-
-    @Query("DELETE FROM movies")
-    void deleteAllMovies();
-
     @Query("SELECT * FROM movies WHERE criteria = :criteria")
     LiveData<List<Movie>> getMoviesByCriteria(String criteria);
 
@@ -37,23 +31,10 @@ public interface MovieDao {
     @Query("SELECT COUNT(movie_id) FROM favourites WHERE movie_id = :movieId")
     LiveData<Integer> isFavourite(int movieId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFavouriteMovie(FavouriteMovie favouriteMovie);
 
     @Query("DELETE FROM favourites WHERE movie_id = :movieId")
     void deleteFavouriteMovie(int movieId);
-
-
-    @Query("SELECT * FROM movies WHERE id = :id")
-    LiveData<Movie> getMoviesLiveData(String id);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMovie(Movie... moviesMovie);
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateMovie(Movie moviesMovie);
-
-    @Delete
-    void deleteMovies(Movie moviesMovie);
 
 }
