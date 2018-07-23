@@ -59,10 +59,10 @@ public class CastFragment extends BottomSheetDialogFragment {
         mBinding.shimmerCastLoading.startShimmer();
         mAdapter = new CastAdapter(getActivity());
         RecyclerView rv_casts = mBinding.rvCasts;
-        rv_casts.setAdapter(mAdapter);
         rv_casts.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         rv_casts.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(), true));
         rv_casts.setItemAnimator(new DefaultItemAnimator());
+        rv_casts.setAdapter(mAdapter);
 
         ProjectUtils.getClient()
                 .create(MovieApi.class)

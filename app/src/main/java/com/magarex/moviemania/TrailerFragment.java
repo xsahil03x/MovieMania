@@ -58,11 +58,11 @@ public class TrailerFragment extends BottomSheetDialogFragment {
 
         mAdapter = new TrailerAdapter(getActivity());
         RecyclerView rv_Trailers = mBinding.rvTrailers;
-        rv_Trailers.setAdapter(mAdapter);
         rv_Trailers.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_Trailers.addItemDecoration(
                 new GridSpacingItemDecoration(1, ProjectUtils.dpToPx(), true));
         rv_Trailers.setItemAnimator(new DefaultItemAnimator());
+        rv_Trailers.setAdapter(mAdapter);
 
         ProjectUtils.getClient()
                 .create(MovieApi.class)

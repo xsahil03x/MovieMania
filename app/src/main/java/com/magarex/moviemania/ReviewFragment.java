@@ -56,10 +56,10 @@ public class ReviewFragment extends BottomSheetDialogFragment {
 
         mAdapter = new ReviewAdapter(getActivity());
         RecyclerView rv_Reviews = mBinding.rvReviews;
-        rv_Reviews.setAdapter(mAdapter);
         rv_Reviews.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_Reviews.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         rv_Reviews.setItemAnimator(new DefaultItemAnimator());
+        rv_Reviews.setAdapter(mAdapter);
 
         ProjectUtils.getClient()
                 .create(MovieApi.class)

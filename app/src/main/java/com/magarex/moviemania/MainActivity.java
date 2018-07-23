@@ -1,13 +1,10 @@
 package com.magarex.moviemania;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.constraint.Group;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,11 +40,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!sharedPreferences.getBoolean(OnBoardingActivity.COMPLETED_ONBOARDING, false)) {
-            startActivity(new Intent(this, OnBoardingActivity.class));
-            finish();
-        }
         ActivityMainBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         rv_movies = mBinding.rvMovies;
         mShimmerLayout = mBinding.shimmerloading;
