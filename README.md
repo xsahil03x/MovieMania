@@ -41,7 +41,19 @@ Constraint Layout.</p>
 <p>Build the project and Run</p>
 
 ## Download APK
-* [Release v1.0](https://github.com/debajyotibasak/UdacityPopularMovies/releases/download/v1.0/app-debug.apk)
+* [Debug v1.0](https://github.com/xsahil03x/MovieMania/releases/download/v1.0/app-debug.apk)
+
+
+## Connect with me on
+<a href="https://www.linkedin.com/in/xsahil03x/" target="_blank">
+<p>
+<img src="https://user-images.githubusercontent.com/20669217/41087222-b9c2c4b6-6a59-11e8-88fd-cd2b514e1ca6.png" width="50" height="50"><br/>
+</p>
+</a><a href="https://twitter.com/xsahil03x" target="_blank">
+<p>
+<img src="https://user-images.githubusercontent.com/20669217/41087119-76391902-6a59-11e8-833d-f26b79fc7bb8.png" width="50" height="50"><br/>
+</p>
+</a>
 
 ## Libraries
 
