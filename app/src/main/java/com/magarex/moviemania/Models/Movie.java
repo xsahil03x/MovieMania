@@ -119,6 +119,7 @@ public class Movie implements Serializable {
                 .load(ProjectUtils.POSTER_BASE_URL + imageUrl)
                 .placeholder(R.drawable.movie_poster_placeholder)
                 .error(R.drawable.movie_poster_error)
+                .dontAnimate()
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(8)))
                 .into(view);
     }
@@ -127,6 +128,7 @@ public class Movie implements Serializable {
     public static void loadBackdropImage(ImageView view, String imageUrl) {
         GlideApp.with(view.getContext())
                 .load(ProjectUtils.BACKDROP_BASE_URL + imageUrl)
+                .dontAnimate()
                 .into(view);
     }
 

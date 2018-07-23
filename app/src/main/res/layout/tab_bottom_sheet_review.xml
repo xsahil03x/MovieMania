@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="No Reviews Available For This Movie"
+            android:text="@string/txt_no_reviews_available_for_this_movie"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"

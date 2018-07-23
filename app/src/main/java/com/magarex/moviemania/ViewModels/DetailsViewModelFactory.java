@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 
 public class DetailsViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private int movieId;
-    private String apiKey;
+    private final int movieId;
+    private final String apiKey;
 
     public DetailsViewModelFactory(int movieId, String apiKey) {
         this.movieId = movieId;

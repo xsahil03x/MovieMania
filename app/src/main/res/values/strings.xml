@@ -1,10 +1,20 @@
 <resources>
     <string name="app_name">Movie Mania</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_main">MainActivity</string>
-
-    <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="txt_released_on">Released on</string>
+    <string name="txt_overview">Overview</string>
+    <string name="txt_close_button">Close Button</string>
+    <string name="txt_filter_movies">Filter Movies</string>
+    <string name="txt_popular_movie">Popular Movie</string>
+    <string name="txt_top_rated_movies">Top Rated Movies</string>
+    <string name="txt_check_popular_movies">Check Popular Movies</string>
+    <string name="txt_check_top_rated">Check Top Rated</string>
+    <string name="txt_favourite_movies">Favourite Movies</string>
+    <string name="txt_check_favourite">Check Favourite</string>
+    <string name="txt_movie_image">Movie Image</string>
+    <string name="txt_rating_star">Rating Star</string>
+    <string name="txt_no_reviews_available_for_this_movie">No Reviews Available For This Movie</string>
+    <string name="txt_sort_movies">Sort Movies</string>
+    <string name="txt_oops_nothing_here">Oops Nothing Here</string>
+    <string name="txt_try_again">Try Again</string>
+    <string name="txt_movie_mania">Movie Mania</string>
 </resources>

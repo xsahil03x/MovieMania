@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 public class AppExecutors {
     private static final Object LOCK = new Object();
     private static AppExecutors sInstance;
-    private Executor diskIO;
+    private final Executor diskIO;
 
     private AppExecutors(Executor diskIO) {
         this.diskIO = diskIO;

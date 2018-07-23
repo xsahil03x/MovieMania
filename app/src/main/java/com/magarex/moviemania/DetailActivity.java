@@ -32,13 +32,13 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
-    ActivityDetailBinding mBinding;
-    TabLayout tabs;
-    ViewPager viewPager;
-    Movie movie;
+    private ActivityDetailBinding mBinding;
+    private TabLayout tabs;
+    private ViewPager viewPager;
+    private Movie movie;
     private boolean isFavourite;
-    ConstraintLayout mBottomSheet;
-    BottomSheetBehavior mBottomSheetBehavior;
+    private ConstraintLayout mBottomSheet;
+    private BottomSheetBehavior mBottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

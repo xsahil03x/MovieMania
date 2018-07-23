@@ -21,7 +21,7 @@ import static com.magarex.moviemania.Utils.ProjectUtils.YOUTUBE_URL;
 
 class TrailerViewHolder extends RecyclerView.ViewHolder {
 
-    TrailerItemBinding mBinding;
+    final TrailerItemBinding mBinding;
 
     TrailerViewHolder(TrailerItemBinding itemBinding) {
         super(itemBinding.getRoot());
@@ -31,7 +31,7 @@ class TrailerViewHolder extends RecyclerView.ViewHolder {
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerViewHolder> {
 
-    private Activity mActivity;
+    private final Activity mActivity;
     private List<Trailer> mTrailer;
 
     public TrailerAdapter(Activity activity) {

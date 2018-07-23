@@ -4,6 +4,4 @@
     <color name="colorPrimaryDark">#171717</color>
     <color name="colorAccent">#7cb342</color>
     <color name="shimmer_background_color">#b1b1b1</color>
-
-    <color name="black_overlay">#66000000</color>
 </resources>

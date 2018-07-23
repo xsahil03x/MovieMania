@@ -18,7 +18,7 @@ import java.util.List;
 
 class ReviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    ReviewItemBinding mBinding;
+    final ReviewItemBinding mBinding;
     private ItemClickListener itemClickListener;
 
     ReviewViewHolder(ReviewItemBinding itemBinding) {
@@ -39,7 +39,7 @@ class ReviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewViewHolder> {
 
-    private Activity mActivity;
+    private final Activity mActivity;
     private List<Review> mReviews;
     private static Boolean flag = false;
 

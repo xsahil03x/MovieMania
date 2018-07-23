@@ -24,7 +24,7 @@ import java.util.List;
 class CastViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-    CastItemBinding mBinding;
+    final CastItemBinding mBinding;
     private ItemClickListener itemClickListener;
 
     CastViewHolder(CastItemBinding itemBinding) {
@@ -45,7 +45,7 @@ class CastViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
 
 public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
 
-    private Activity mActivity;
+    private final Activity mActivity;
     private List<Cast> mCasts;
 
     public CastAdapter(Activity activity) {
@@ -81,6 +81,8 @@ public class CastAdapter extends RecyclerView.Adapter<CastViewHolder> {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, pairs);
                 mActivity.startActivity(intent, options.toBundle());
+            } else {
+                mActivity.startActivity(intent);
             }
         });
     }

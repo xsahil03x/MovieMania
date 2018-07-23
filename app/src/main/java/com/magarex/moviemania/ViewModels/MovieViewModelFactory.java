@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 
 public class MovieViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private String filter;
-    private String apiKey;
+    private final String filter;
+    private final String apiKey;
 
     public MovieViewModelFactory(String filter, String apiKey) {
         this.filter = filter;

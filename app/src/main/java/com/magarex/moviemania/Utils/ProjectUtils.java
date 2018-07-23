@@ -4,14 +4,21 @@ import android.arch.persistence.room.TypeConverter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
+
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.magarex.moviemania.BuildConfig;
 import com.magarex.moviemania.Database.MovieDatabase;
+import com.magarex.moviemania.R;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;

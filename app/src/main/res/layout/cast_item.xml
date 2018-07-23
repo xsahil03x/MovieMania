@@ -29,7 +29,7 @@
                 android:layout_margin="4dp"
                 android:adjustViewBounds="true"
                 android:castImage="@{cast.profilePath}"
-                android:contentDescription="Movie Image"
+                android:contentDescription="@string/txt_movie_image"
                 android:scaleType="centerCrop"
                 android:transitionName="castTransition"
                 app:layout_constraintEnd_toEndOf="parent"

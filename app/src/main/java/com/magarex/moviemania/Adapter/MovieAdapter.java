@@ -23,7 +23,7 @@ import java.util.List;
 class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ItemClickListener itemClickListener;
-    MovieItemBinding mBinding;
+    final MovieItemBinding mBinding;
 
     MovieViewHolder(MovieItemBinding itemBinding) {
         super(itemBinding.getRoot());
@@ -43,7 +43,7 @@ class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
-    private Activity mActivity;
+    private final Activity mActivity;
     private List<Movie> mMovies;
 
     public MovieAdapter(Activity activity) {
@@ -71,6 +71,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
             Intent intent = new Intent(mActivity, DetailActivity.class);
             Bundle movieData = new Bundle();
             movieData.putSerializable("data", mMovies.get(position1));
+            intent.putExtra("moviePoster", mMovies.get(position).getPosterPath());
             intent.putExtras(movieData);
 
             Pair[] pairs = new Pair[2];
@@ -80,6 +81,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, pairs);
                 mActivity.startActivity(intent, options.toBundle());
+            }else {
+                mActivity.startActivity(intent);
             }
         });
     }

@@ -5,5 +5,5 @@
         android:id="@+id/action_sort"
         android:icon="@drawable/ic_sort_green"
         app:showAsAction="ifRoom"
-        android:title="Sort Movies"/>
+        android:title="@string/txt_sort_movies"/>
 </menu>
