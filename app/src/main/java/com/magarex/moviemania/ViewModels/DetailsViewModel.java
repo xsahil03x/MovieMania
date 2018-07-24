@@ -8,7 +8,7 @@ import com.magarex.moviemania.Database.MovieRepository;
 public class DetailsViewModel extends ViewModel {
     private LiveData<Integer> favourite;
 
-    DetailsViewModel(int movieId, String apiKey) {
+    DetailsViewModel(int movieId) {
         if (favourite == null) {
             favourite = MovieRepository.getInstance().isFavourite(movieId);
         }

@@ -11,11 +11,8 @@
         android:id="@+id/imageView4"
         android:layout_width="145dp"
         android:layout_height="145dp"
-        android:layout_marginEnd="107dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="208dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_video_camera" />

@@ -21,11 +21,15 @@ import com.magarex.moviemania.R;
 import com.magarex.moviemania.Utils.GlideApp;
 import com.magarex.moviemania.Utils.ProjectUtils;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Parcel
 @Entity(tableName = "movies")
-public class Movie implements Serializable {
+public class Movie{
 
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -76,7 +80,7 @@ public class Movie implements Serializable {
     @ColumnInfo(name = "criteria")
     private String criteria;
 
-
+    @ParcelConstructor
     public Movie(Integer id, Integer voteCount, Boolean video, Double voteAverage, String title, Double popularity, String posterPath, String originalLanguage, String originalTitle, List<Integer> genreIds, String backdropPath, Boolean adult, String overview, String releaseDate, String criteria) {
         this.id = id;
         this.voteCount = voteCount;

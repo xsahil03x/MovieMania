@@ -26,6 +26,8 @@ import com.magarex.moviemania.ViewModels.DetailsViewModel;
 import com.magarex.moviemania.ViewModels.DetailsViewModelFactory;
 import com.magarex.moviemania.databinding.ActivityDetailBinding;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,46 +46,46 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
-        movie = (Movie) getIntent().getExtras().getSerializable("data");
+        movie = Parcels.unwrap(getIntent().getParcelableExtra("data"));
         if (movie != null) {
             mBinding.setMovie(movie);
 
-                mBottomSheet = findViewById(R.id.btmSheet);
-                mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
-                viewPager = findViewById(R.id.viewpager);
-                viewPager.setOffscreenPageLimit(2);
-                setupViewPager(viewPager);
-                tabs = findViewById(R.id.tabs);
-                tabs.setupWithViewPager(viewPager, true);
+            mBottomSheet = findViewById(R.id.btmSheet);
+            mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+            viewPager = findViewById(R.id.viewpager);
+            viewPager.setOffscreenPageLimit(2);
+            setupViewPager(viewPager);
+            tabs = findViewById(R.id.tabs);
+            tabs.setupWithViewPager(viewPager, true);
 
-                DetailsViewModelFactory factory = new DetailsViewModelFactory(movie.getId(),
-                        ProjectUtils.API_KEY);
-                DetailsViewModel viewModel = ViewModelProviders.of(this, factory).get(
-                        DetailsViewModel.class);
-                viewModel.getFavourite().observe(this, integer -> {
-                    if (integer != null) {
-                        isFavourite = integer != 0;
+            DetailsViewModelFactory factory = new DetailsViewModelFactory(movie.getId(),
+                    ProjectUtils.API_KEY);
+            DetailsViewModel viewModel = ViewModelProviders.of(this, factory).get(
+                    DetailsViewModel.class);
+            viewModel.getFavourite().observe(this, integer -> {
+                if (integer != null) {
+                    isFavourite = integer != 0;
+                }
+                mBinding.imgFavourite.setBackground(isFavourite ? ContextCompat.
+                        getDrawable(DetailActivity.this, R.drawable.ic_favorite_black_24dp) :
+                        ContextCompat.getDrawable(DetailActivity.this, R.drawable.ic_favorite_border_black_24dp));
+                Gson gson = new Gson();
+                String json = gson.toJson(movie);
+                final FavouriteMovie favouriteMovie = gson.fromJson(json, FavouriteMovie.class);
+                mBinding.imgFavourite.setOnClickListener(v -> {
+                    //toggleFavouriteIcon((FloatingActionButton) v);
+                    MovieRepository.getInstance().refreshFavouriteMovies(favouriteMovie,
+                            isFavourite);
+                    if (isFavourite) {
+                        Toast.makeText(DetailActivity.this, "Movie Removed Trom Favourites",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(DetailActivity.this, "Movie Added To Favourites",
+                                Toast.LENGTH_SHORT).show();
                     }
-                    mBinding.imgFavourite.setBackground(isFavourite ? ContextCompat.
-                            getDrawable(DetailActivity.this, R.drawable.ic_favorite_black_24dp) :
-                            ContextCompat.getDrawable(DetailActivity.this, R.drawable.ic_favorite_border_black_24dp));
-                    Gson gson = new Gson();
-                    String json = gson.toJson(movie);
-                    final FavouriteMovie favouriteMovie = gson.fromJson(json, FavouriteMovie.class);
-                    mBinding.imgFavourite.setOnClickListener(v -> {
-                        //toggleFavouriteIcon((FloatingActionButton) v);
-                        MovieRepository.getInstance().refreshFavouriteMovies(favouriteMovie,
-                                isFavourite);
-                        if (isFavourite) {
-                            Toast.makeText(DetailActivity.this, "Movie Removed Trom Favourites",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(DetailActivity.this, "Movie Added To Favourites",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        isFavourite = !isFavourite;
-                    });
+                    isFavourite = !isFavourite;
                 });
+            });
 
         }
     }

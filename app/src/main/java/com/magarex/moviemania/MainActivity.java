@@ -1,6 +1,8 @@
 package com.magarex.moviemania;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.magarex.moviemania.Adapter.MovieAdapter;
+import com.magarex.moviemania.Interface.ItemClickListener;
 import com.magarex.moviemania.Utils.GridSpacingItemDecoration;
 import com.magarex.moviemania.Utils.ProjectUtils;
 import com.magarex.moviemania.ViewModels.MovieViewModel;
@@ -31,7 +35,7 @@ import java.util.Objects;
 
 import static com.magarex.moviemania.Utils.ProjectUtils.dpToPx;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private MovieAdapter mAdapter;
     private RecyclerView rv_movies;

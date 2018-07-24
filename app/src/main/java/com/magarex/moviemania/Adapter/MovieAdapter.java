@@ -18,6 +18,8 @@ import com.magarex.moviemania.Models.Movie;
 import com.magarex.moviemania.R;
 import com.magarex.moviemania.databinding.MovieItemBinding;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -70,7 +72,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         holder.setItemClickListener((view, position1, isLongClick) -> {
             Intent intent = new Intent(mActivity, DetailActivity.class);
             Bundle movieData = new Bundle();
-            movieData.putSerializable("data", mMovies.get(position1));
+            movieData.putParcelable("data", Parcels.wrap(mMovies.get(position)));
             intent.putExtra("moviePoster", mMovies.get(position).getPosterPath());
             intent.putExtras(movieData);
 

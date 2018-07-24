@@ -17,6 +17,6 @@ public class DetailsViewModelFactory extends ViewModelProvider.NewInstanceFactor
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new DetailsViewModel(movieId, apiKey);
+        return (T) new DetailsViewModel(movieId);
     }
 }
