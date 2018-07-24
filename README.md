@@ -41,7 +41,8 @@ Constraint Layout.</p>
 <p>Build the project and Run</p>
 
 ## Download APK
-* [Debug v1.0](https://github.com/xsahil03x/MovieMania/releases/download/v1.0/app-debug.apk)
+* [Release v1.0](https://github.com/xsahil03x/MovieMania/releases/download/v1.0/app-debug.apk)
+* [Release v2.0](https://github.com/xsahil03x/MovieMania/releases/download/v2.0/app-debug.apk)
 
 
 ## Connect with me on
