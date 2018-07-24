@@ -13,18 +13,14 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.magarex.moviemania.utils.GlideApp;
 
+import org.parceler.Parcel;
+
 import java.io.Serializable;
 
 import static com.magarex.moviemania.utils.ProjectUtils.YOUTUBE_THUMBNAIL;
 
 @Entity(tableName = "trailers")
-//        indices = @Index("fav_movie_id"),
-//        foreignKeys = @ForeignKey(
-//                entity = FavMovieEntity.class,
-//                parentColumns = "movieId",
-//                childColumns = "fav_movie_id",
-//                onDelete = CASCADE))
-public class Trailer implements Serializable {
+public class Trailer{
     @PrimaryKey
     @NonNull
     @SerializedName("id")

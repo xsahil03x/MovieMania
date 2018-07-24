@@ -14,10 +14,13 @@ import com.magarex.moviemania.R;
 import com.magarex.moviemania.utils.GlideApp;
 import com.magarex.moviemania.utils.ProjectUtils;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+
 import java.io.Serializable;
 
 @Entity(tableName = "casts")
-public class Cast implements Serializable {
+public class Cast{
 
     @PrimaryKey
     @NonNull
