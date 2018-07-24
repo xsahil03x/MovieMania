@@ -1,5 +1,6 @@
 package com.magarex.moviemania;
 
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,10 +58,11 @@ public class CastFragment extends BottomSheetDialogFragment {
         TabBottomSheetCastBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.tab_bottom_sheet_cast, container, false);
 
         mBinding.shimmerCastLoading.startShimmer();
+        int recyclerViewSpanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 4;
         mAdapter = new CastAdapter(getActivity());
         RecyclerView rv_casts = mBinding.rvCasts;
-        rv_casts.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        rv_casts.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(), true));
+        rv_casts.setLayoutManager(new GridLayoutManager(getActivity(), recyclerViewSpanCount));
+        rv_casts.addItemDecoration(new GridSpacingItemDecoration(recyclerViewSpanCount, dpToPx(), true));
         rv_casts.setItemAnimator(new DefaultItemAnimator());
         rv_casts.setAdapter(mAdapter);
 

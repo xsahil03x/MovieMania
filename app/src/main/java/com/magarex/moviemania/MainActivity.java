@@ -1,6 +1,7 @@
 package com.magarex.moviemania;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         mAdapter = new MovieAdapter(this);
-        rv_movies.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-        rv_movies.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(), true));
+        int recyclerViewSpanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 4;
+        rv_movies.setLayoutManager(new GridLayoutManager(MainActivity.this, recyclerViewSpanCount));
+        rv_movies.addItemDecoration(new GridSpacingItemDecoration(recyclerViewSpanCount, dpToPx(), true));
         rv_movies.setItemAnimator(new DefaultItemAnimator());
         rv_movies.setAdapter(mAdapter);
         loadFromSharedPrefs();

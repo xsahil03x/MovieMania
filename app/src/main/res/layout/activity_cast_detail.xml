@@ -29,7 +29,6 @@
                 android:layout_marginEnd="88dp"
                 android:layout_marginStart="88dp"
                 android:layout_marginTop="24dp"
-                android:scaleType="centerCrop"
                 android:transitionName="castTransition"
                 app:civ_border_color="@android:color/white"
                 app:civ_border_width="2dp"
