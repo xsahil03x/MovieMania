@@ -17,4 +17,8 @@
     <string name="txt_oops_nothing_here">Oops Nothing Here</string>
     <string name="txt_try_again">Try Again</string>
     <string name="txt_movie_mania">Movie Mania</string>
+    <string name="tab_cast_title">Casts</string>
+    <string name="tab_trailer_title">Trailers</string>
+    <string name="tab_review_title">Reviews</string>
+
 </resources>
