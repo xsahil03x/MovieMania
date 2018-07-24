@@ -7,15 +7,15 @@
 
         <variable
             name="movie"
-            type="com.magarex.moviemania.Models.Movie" />
+            type="com.magarex.moviemania.models.Movie" />
 
-        <import type="com.magarex.moviemania.Utils.ProjectUtils" />
+        <import type="com.magarex.moviemania.utils.ProjectUtils" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DetailActivity">
+        tools:context=".ui.activities.DetailActivity">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

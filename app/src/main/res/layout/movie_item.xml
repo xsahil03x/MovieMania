@@ -7,9 +7,9 @@
 
         <variable
             name="movie"
-            type="com.magarex.moviemania.Models.Movie" />
+            type="com.magarex.moviemania.models.Movie" />
 
-        <import type="com.magarex.moviemania.Utils.ProjectUtils" />
+        <import type="com.magarex.moviemania.utils.ProjectUtils" />
 
     </data>
 

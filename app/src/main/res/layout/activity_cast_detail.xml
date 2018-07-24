@@ -7,9 +7,9 @@
 
         <variable
             name="person"
-            type="com.magarex.moviemania.Models.Person" />
+            type="com.magarex.moviemania.models.Person" />
 
-        <import type="com.magarex.moviemania.Utils.ProjectUtils" />
+        <import type="com.magarex.moviemania.utils.ProjectUtils" />
     </data>
 
     <ScrollView
@@ -20,7 +20,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".CastDetailActivity">
+            tools:context=".ui.activities.CastDetailActivity">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_person_image"

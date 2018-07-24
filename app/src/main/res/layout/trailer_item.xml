@@ -7,7 +7,7 @@
 
         <variable
             name="trailer"
-            type="com.magarex.moviemania.Models.Trailer" />
+            type="com.magarex.moviemania.models.Trailer" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="cast"
-            type="com.magarex.moviemania.Models.Cast" />
+            type="com.magarex.moviemania.models.Cast" />
     </data>
 
     <LinearLayout

@@ -8,11 +8,11 @@
 
         <variable
             name="review"
-            type="com.magarex.moviemania.Models.Review" />
+            type="com.magarex.moviemania.models.Review" />
 
         <import type="android.view.View" />
 
-        <import type="com.magarex.moviemania.Utils.ProjectUtils" />
+        <import type="com.magarex.moviemania.utils.ProjectUtils" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -72,7 +72,7 @@
             app:layout_constraintEnd_toStartOf="@+id/img_down"
             app:layout_constraintStart_toStartOf="@+id/txt_author_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_author_name"
-            tools:text="wasduadasadasdsadasdsadsadasdsadsadasdsadsadassdjkasdnaksjdnsakjdnaskjdnsadkjasndkjasdnkasjdnaskjddasyuhdbasjkdbaskjdbaskjdbaskjdbkasjdbaskjdsjdnaskjdnaskjdasnkjdnsakjdnsakjdnskjdnaskjdnaskjdnaskjdnaskjdnaskjdnaskjdnasjdnasj" />
+            tools:text="Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text" />
 
         <ImageView
             android:id="@+id/img_down"
